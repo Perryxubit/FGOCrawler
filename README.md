@@ -22,7 +22,8 @@ Main resource crawled from website: <br>
 <br>
 PS1: Main entrance function: **Crawler_FGO.py** <br>
 PS2: All output data will be saved in your local disk, so you need to set following file path parameters to run this program: <br>
-  &emsp;picturePath = 'D:/Crawler/FGO/picture/' <br>
+For example: <br>
+  &emsp;picturePath = 'D:/Crawler/FGO/picture_hero/' <br>
   &emsp;videoPath = 'D:/Crawler/FGO/video/' <br>
   &emsp;mycodePath = 'D:/Crawler/FGO/picture_mycode/' <br>
   &emsp;heroPath = 'D:/Crawler/FGO/FGO Hero/' <br>
