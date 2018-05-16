@@ -22,12 +22,12 @@ Main resource crawled from website: <br>
 <br>
 PS1: Main entrance function: **Crawler_FGO.py** <br>
 PS2: All output data will be saved in your local disk, so you need to set following file path parameters to run this program: <br>
-picturePath = 'D:/Crawler/FGO/picture/' <br>
-videoPath = 'D:/Crawler/FGO/video/' <br>
-mycodePath = 'D:/Crawler/FGO/picture_mycode/' <br>
-heroPath = 'D:/Crawler/FGO/FGO Hero/' <br>
-mycodeDataPath = 'D:/Crawler/FGO/FGO Mystic Code/' <br>
-logDirectory = r'D:/Crawler/FGO/log/' <br>
+  picturePath = 'D:/Crawler/FGO/picture/' <br>
+  videoPath = 'D:/Crawler/FGO/video/' <br>
+  mycodePath = 'D:/Crawler/FGO/picture_mycode/' <br>
+  heroPath = 'D:/Crawler/FGO/FGO Hero/' <br>
+  mycodeDataPath = 'D:/Crawler/FGO/FGO Mystic Code/' <br>
+  logDirectory = r'D:/Crawler/FGO/log/' <br>
 PS3: Main page of FGO wiki: (with Chinese language)<br>
 http://fgowiki.com/guide/petdetail <br>
 
