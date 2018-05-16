@@ -34,10 +34,10 @@ http://fgowiki.com/guide/petdetail <br>
 <br>
 Result examples: <br>
 Hero Cards <br>
-![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg)
+![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg);
 
 Mystic cards 魔术礼装卡 (1 card per mystic code) <br>
-![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg)
+![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg);
 
 Hero skill videos 宝具动画 (1 mp4 video per hero) <br>
-![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/HeroVideos.jpg)
+![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/HeroVideos.jpg);
