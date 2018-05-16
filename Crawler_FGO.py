@@ -11,13 +11,16 @@ import json
 # default parameter
 picturePath = 'D:/Crawler/FGO/picture/'
 videoPath = 'D:/Crawler/FGO/video/'
+mycodePath = 'D:/Crawler/FGO/picture_mycode/'
 heroPath = 'D:/Crawler/FGO/FGO Hero/'
+mycodeDataPath = 'D:/Crawler/FGO/FGO Mystic Code/'
 logDirectory = r'D:/Crawler/FGO/log/'
 
 
 ####### 程序开始 #######
 traceOn = True
-basedUrl = 'http://fgowiki.com/guide/petdetail/'
+basedUrlHero = 'http://fgowiki.com/guide/petdetail/'
+basedUrlMysticCode = 'http://fgowiki.com/guide/equipdetail/'
 
 if(not os.path.exists(logDirectory)):
     os.makedirs(logDirectory)
@@ -29,7 +32,7 @@ if(not os.path.exists(videoPath)):
     os.makedirs(videoPath)
     if (traceOn): print("Created - " + videoPath)
 
-if (traceOn): print("PictureCrawler for: " + basedUrl)
+if (traceOn): print("PictureCrawler for: " + basedUrlHero)
 
 # header - 防止防盗链
 header = {
@@ -89,14 +92,23 @@ def crawlFGOVideo(heroList):
         logObject.addNewEntry(videoUrl)
 
 def crawlFGOHeroData(heroList):
-    logObject = CrawlerLog(logDirectory + 'hero.log')
+    heroLogPath = logDirectory + 'hero.log'
+    heroListFilePath = heroPath + 'HeroList.txt'
+    if(not os.path.exists(heroLogPath)): # if there is no log -> initialize the output file
+        if(os.path.exists(heroListFilePath)):
+            os.remove(heroListFilePath)
+            print('Initialized the output file.')
+
+    logObject = CrawlerLog(heroLogPath)
+    # 0 and 1 are both 玛修, start from 1
     for heroIndex in range(0, len(heroList)):
-        heroPageUrl = basedUrl + str(heroIndex)
+        heroPageUrl = basedUrlHero + str(heroIndex + 1) # start from 1! NOT 0
         if(logObject.checkTargetIn(heroPageUrl)): # check repeating data
             print("Repeated Hero - No." + str(heroIndex+1) + ' ' + heroList[heroIndex])
             continue
 
         print("Getting data for New Hero - No." + str(heroIndex+1) + ' ' + heroList[heroIndex])
+        print(heroPageUrl)
         pageHtml = requests.get(heroPageUrl, headers=header)
         '''
        Attention: 
@@ -108,14 +120,16 @@ def crawlFGOHeroData(heroList):
         #print(pageHtml.text)
         if(jsonData):
             jsonString = jsonData.group()[:-1]
-            if(traceOn): print(jsonString + " Found.")
+            #if(traceOn): print(jsonString + " Found.")
             heroDict = json.loads(jsonString) # get dictionary of Json
             #for key in heroDict[0]: print(key),
             separator = '###'
-            writeText = str(heroIndex+1) + separator + str(heroDict[0]['NAME']) + separator + str(heroDict[0]['CLASS']) + separator + str(heroDict[0]['STAR']) + separator + str(heroDict[0]['Property'])
+            writeText = str(heroIndex) + separator + str(heroDict[0]['NAME']) + \
+                        separator + str(heroDict[0]['CLASS']) + separator + str(heroDict[0]['STAR']) + separator + str(heroDict[0]['Gender'])\
+                        + separator + str(heroDict[0]['ILLUST']) + separator + str(heroDict[0]['Property'])
             if(traceOn): print(writeText)
 
-            heroListFilePath = heroPath + 'HeroList.txt'
+            #output the result
             f = open(heroListFilePath, 'a')
             f.write(writeText + '\n')
             f.close()
@@ -123,9 +137,82 @@ def crawlFGOHeroData(heroList):
             # save in log
             logObject.addNewEntry(heroPageUrl)
 
+def crawlFGOMyCode(imgType):
+    logObject = CrawlerLog(logDirectory + 'mycode.log')
+    basedUrlMyCode = 'http://img.fgowiki.com/fgo/card/equip/'
+    for codeIndex in range(0, 10000): # up to 10000 cards so far
+        # index start from 1
+        codeUrl = basedUrlMyCode + getFormattedIndexString(codeIndex+1) + imgType + '.jpg'
+        if(logObject.checkTargetIn(codeUrl)):
+            print('Repeated Mystic Code - ' + codeUrl)
+            continue
+
+        mycodeHtml = requests.get(codeUrl, headers=header)
+        if(mycodeHtml.status_code != 200):
+            # if respond code is not 200 -> exit (usually no new cards get)
+            print('Finished, totally get ' + str(codeIndex+1) + ' cards.')
+            return codeIndex+1
+
+        savedFilePath = mycodePath + str(codeIndex+1) + ".jpg"
+        f = open(savedFilePath, 'wb')
+        f.write(mycodeHtml.content)
+        f.close()
+
+        sleep(random.randint(1, 10) * 0.01)
+        print("Crawling - " + codeUrl + " done.")
+        logObject.addNewEntry(codeUrl)
+
+def crawlFGOMyCodeData(maxNo):
+    myCodeLogPath = logDirectory + 'mycode(data).log'
+    mycodeListFilePath = mycodeDataPath + 'MysticCodeList.txt'
+    if (not os.path.exists(myCodeLogPath)):  # if there is no log -> initialize the output file
+        if (os.path.exists(mycodeListFilePath)):
+            os.remove(mycodeListFilePath)
+            print('Initialized the output file.')
+
+    logObject = CrawlerLog(myCodeLogPath)
+    # start from 1
+    for codeIndex in range(1, maxNo):
+        mycodePageUrl = basedUrlMysticCode + str(codeIndex)  # start from 1!
+        if (logObject.checkTargetIn(mycodePageUrl)):  # check repeating data
+            print("Repeated Mystic Code - No." + str(codeIndex))
+            continue
+
+        print("Getting data for New Mystic Code - No." + str(codeIndex))
+        print('downloading - ' + mycodePageUrl)
+        pageHtml = requests.get(mycodePageUrl, headers=header)
+        '''
+       Attention: 
+       re.match only match the string ONLY from text BEGINNING, 
+       re.search match the string from every char
+       regular expresss to get JSON data ->  r'\[{\"ID\"(.*?)}\]'
+       '''
+        jsonData = re.search('\[{\"ID\"(.*?)}\];', pageHtml.text)
+        # print(pageHtml.text)
+        if (jsonData):
+            jsonString = jsonData.group()[:-1] # get last matching object
+            heroDict = json.loads(jsonString)  # get dictionary of Json
+            # for key in heroDict[0]: print(key),
+            separator = '###'
+            writeText = str(heroDict[0]['ID']) + separator + str(heroDict[0]['NAME_CN']) + \
+                        separator + str(heroDict[0]['STAR']) + separator + str(heroDict[0]['SKILL_E']).replace('\n', '') + \
+                        separator + str(heroDict[0]['SKILLMAX_E']).replace('\n', '') + separator + \
+                        str(heroDict[0]['INTRO']).replace('\n', '')
+            if (traceOn): print(writeText)
+
+            # output the result
+            f = open(mycodeListFilePath, 'a')
+            f.write(writeText + '\n')
+            f.close()
+            print("Hero No." + str(codeIndex) + " downloaded.")
+            # save in log
+            logObject.addNewEntry(mycodePageUrl)
+
+    return
+
 def crawlFGO():
     heroList = []
-    html = requests.get(basedUrl, headers=header)
+    html = requests.get(basedUrlHero, headers=header)
     soup = BeautifulSoup(html.text, "html.parser")  # parse this page
     allLabelA = soup.find('select', class_='pet').find_all('option')  # get list of results
     html.encoding = 'utf-8'
@@ -140,10 +227,10 @@ def crawlFGO():
     sleep(random.randint(1, 10) * 0.01)
     print("共有英灵总数 - " + str(len(heroList)))
 
-    #1 crawling data
-    crawlFGOHeroData(heroList)
+    #1 crawling hero data
+    #crawlFGOHeroData(heroList)
 
-    #2 crawling pictures
+    #2 crawling hero pictures
     ''' 
     图片索引字母imgType
         A - 1破
@@ -152,13 +239,24 @@ def crawlFGO():
         D - 4破
         E - 愚人节  
      '''
-    crawlFGOPicture(heroList, 'A')
+    #crawlFGOPicture(heroList, 'A')
 
-    #3 crawling videos
-    crawlFGOVideo(heroList)
+    #3 crawling hero final skills videos
+    #crawlFGOVideo(heroList)
+
+    #4 crawling mystic code cards picture
+    mycodeMaxNo = crawlFGOMyCode('A')
+    #get data
+    crawlFGOMyCodeData(int(mycodeMaxNo))
+
 
 
 if( __name__ == "__main__"):
     # main function
     crawlFGO()
+
+
+
+
+
 
