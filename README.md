@@ -32,3 +32,8 @@ For example: <br>
 PS3: Main page of FGO wiki: (with Chinese language)<br>
 http://fgowiki.com/guide/petdetail <br>
 
+Examples: <br>
+
+![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/HeroCards.jpg)
+![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/HeroVideos.jpg)
+![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg)
