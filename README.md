@@ -34,7 +34,6 @@ http://fgowiki.com/guide/petdetail <br>
 <br>
 <br>
 Result examples: <br>
-![image](https://github.com/Perryxubit/FGOCrawler/raw/master/pictures/MysticCodeCards.jpg)
 
 Mystic cards 魔术礼装卡 (1 card per mystic code) <br>
 ![image](https://github.com/Perryxubit/FGOCrawler/raw/master/pictures/MysticCodeCards.jpg)
