@@ -32,9 +32,8 @@ For example: <br>
 PS3: Main page of FGO wiki: (with Chinese language)<br>
 http://fgowiki.com/guide/petdetail <br>
 <br>
-<br>
-Result examples: <br>
 
+Result examples: <br>
 Mystic cards 魔术礼装卡 (1 card per mystic code) <br>
 ![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg)
 
