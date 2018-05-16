@@ -9,7 +9,7 @@ import re
 import json
 
 # default parameter
-picturePath = 'D:/Crawler/FGO/picture/'
+picturePath = 'D:/Crawler/FGO/picture_hero/'
 videoPath = 'D:/Crawler/FGO/video/'
 mycodePath = 'D:/Crawler/FGO/picture_mycode/'
 heroPath = 'D:/Crawler/FGO/FGO Hero/'
@@ -56,8 +56,8 @@ def crawlFGOPicture(heroList, imgType = 'A'):
     # img.fgowiki.com/fgo/card/servant/002A.jpg
     imgUrl = 'http://img.fgowiki.com/fgo/card/servant/'
 
-    for heroIndex in range(0, len(heroList)):
-        cardUrl = imgUrl + getFormattedIndexString(heroIndex+1) + imgType + '.jpg'
+    for heroIndex in range(1, len(heroList)+1):
+        cardUrl = imgUrl + getFormattedIndexString(heroIndex) + imgType + '.jpg'
         imgHtml = requests.get(cardUrl, headers=header)
 
         savedFilePath = picturePath + str(heroIndex) + "_" + imgType + ".jpg"
@@ -74,13 +74,18 @@ def crawlFGOVideo(heroList):
     logObject = CrawlerLog(logDirectory + 'video.log')
     videoBasedUrl = 'http://img.fgowiki.com/fgo/mp4/'
 
-    for heroIndex in range(0, len(heroList)):
-        videoUrl = videoBasedUrl + 'No.' + getFormattedIndexString(heroIndex+1) + '.mp4'
+    for heroIndex in range(1, len(heroList)+1):
+        videoUrl = videoBasedUrl + 'No.' + getFormattedIndexString(heroIndex) + '.mp4'
         if(logObject.checkTargetIn(videoUrl)):
             print("Repeated video - " + videoUrl)
             continue
 
+        print("Crawling new video - " + videoUrl)
         imgHtml = requests.get(videoUrl, headers=header)
+        if (imgHtml.status_code != 200):
+            # if respond code is not 200 -> pass
+            print('invalid video - ' + videoUrl)
+            continue
 
         savedFilePath = videoPath + str(heroIndex) + ".mp4"
         f = open(savedFilePath, 'wb')
@@ -239,24 +244,18 @@ def crawlFGO():
         D - 4破
         E - 愚人节  
      '''
-    #crawlFGOPicture(heroList, 'A')
+    #crawlFGOPicture(heroList, 'C')
 
     #3 crawling hero final skills videos
-    #crawlFGOVideo(heroList)
+    crawlFGOVideo(heroList)
 
     #4 crawling mystic code cards picture
-    mycodeMaxNo = crawlFGOMyCode('A')
-    #get data
-    crawlFGOMyCodeData(int(mycodeMaxNo))
+    #mycodeMaxNo = crawlFGOMyCode('A')
 
-
+    #5 crawling mystic code data data
+    #crawlFGOMyCodeData(int(mycodeMaxNo))
 
 if( __name__ == "__main__"):
     # main function
     crawlFGO()
-
-
-
-
-
 
