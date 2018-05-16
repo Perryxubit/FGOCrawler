@@ -31,9 +31,14 @@ For example: <br>
   &emsp;logDirectory = r'D:/Crawler/FGO/log/' <br>
 PS3: Main page of FGO wiki: (with Chinese language)<br>
 http://fgowiki.com/guide/petdetail <br>
-
-Examples: <br>
-
+<br>
+<br>
+Result examples: <br>
+Hero cards 英灵卡 (4 cards per hero) <br>
 ![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/HeroCards.jpg)
-![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/HeroVideos.jpg)
+
+Mystic cards 魔术礼装卡 (1 card per mystic code) <br>
 ![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg)
+
+Hero skill videos 宝具动画 (1 mp4 video per hero) <br>
+![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/HeroVideos.jpg)
