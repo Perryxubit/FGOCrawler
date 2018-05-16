@@ -17,9 +17,9 @@ crawlFGOVideo(heroList)
 mycodeMaxNo = crawlFGOMyCode('A')
 (return value is the total amount of available mystic code so far)<br/>
 5. crawl Mystic code data (name, rarity, skills, etc)<br/>
-crawlFGOMyCodeData(int(mycodeMaxNo))
-<br/>
-<br/>
+crawlFGOMyCodeData(int(mycodeMaxNo))<br/>
+<br>
+<br>
 PS: Main page of FGO wiki: (with Chinese language)<br/>
 http://fgowiki.com/guide/petdetail
 
