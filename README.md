@@ -35,7 +35,7 @@ http://fgowiki.com/guide/petdetail <br>
 <br>
 Result examples: <br>
 Hero cards 英灵卡 (4 cards per hero) <br>
-![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/HeroCards.jpg)
+![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg)
 
 Mystic cards 魔术礼装卡 (1 card per mystic code) <br>
 ![image](https://github.com/Perryxubit/FGOCrawler/blob/master/pictures/MysticCodeCards.jpg)
