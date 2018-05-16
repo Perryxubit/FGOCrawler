@@ -32,7 +32,7 @@ class CrawlerLog:
             finally:
                 if 'fo' in locals():  # only close if file exist
                     fo.close()
-
+ 
         else: # load file
             fo = None
             try:  # read file
